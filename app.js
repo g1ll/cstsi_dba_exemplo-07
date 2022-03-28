@@ -36,14 +36,22 @@ try {
     //                 descricao: 0
     //             }
     //         }).toArray()
-    
+
     //Usando o Projection como um método
+    // const resultados = await client.db('loja').collection('produtos')
+    //     .find().project({
+    //                 _id: 0,
+    //                 qtd_estoque: 0,
+    //                 descricao: 0
+    //             }).toArray()
+
+    //Exemplo de ordenação com a opção sort
     const resultados = await client.db('loja').collection('produtos')
-        .find().project({
-                    _id: 0,
-                    qtd_estoque: 0,
-                    descricao: 0
-                }).toArray()
+        .find({},
+            {   sort:{preco:-1},
+                projection: { _id: 0,qtd_estoque: 0, descricao: 0}
+            }).toArray()
+            
     console.table(resultados)
 
 } catch (error) {

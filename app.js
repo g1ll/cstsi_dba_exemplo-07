@@ -13,7 +13,19 @@ try {
         console.log("Conectado!");
     else throw Error("Erro ao conectar ao banco !!")
 
-    
+    //consulta simples
+    // const resultados = await client.db('loja').collection('produtos').find().toArray()
+
+    //consulta com projeção
+    const resultados = await client.db('loja').collection('produtos').find({},
+        {projection: {
+                id_prod: 1,
+                nome:1,
+                importado:1,
+                preco: 1
+            }
+        }).toArray()
+    console.table(resultados)
 
 } catch (error) {
     console.log(error)

@@ -17,14 +17,25 @@ try {
     // const resultados = await client.db('loja').collection('produtos').find().toArray()
 
     //consulta com projeção
-    const resultados = await client.db('loja').collection('produtos').find({},
-        {projection: {
-                id_prod: 1,
-                nome:1,
-                importado:1,
-                preco: 1
-            }
-        }).toArray()
+    // const resultados = await client.db('loja').collection('produtos').find({},
+    //     {projection: {
+    //             id_prod: 1,
+    //             nome:1,
+    //             importado:1,
+    //             preco: 1
+    //         }
+    //     }).toArray()
+
+    //especificando os campos que não queremos que apareçam
+    const resultados = await client.db('loja').collection('produtos')
+        .find({},
+            {
+                projection: {
+                    _id: 0,
+                    qtd_estoque: 0,
+                    descricao: 0
+                }
+            }).toArray()
     console.table(resultados)
 
 } catch (error) {

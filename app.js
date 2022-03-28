@@ -46,12 +46,31 @@ try {
     //             }).toArray()
 
     //Exemplo de ordenação com a opção sort
+    // const resultados = await client.db('loja').collection('produtos')
+    //     .find({},
+    //         {   sort:{preco:-1},
+    //             projection: { _id: 0,qtd_estoque: 0, descricao: 0}
+    //         }).toArray()
+
+    //Usando o Sort como um método
+    // const resultados = await client.db('loja').collection('produtos')
+    //     .find().sort({preco:-1}).project({
+    //                 _id: 0,
+    //                 qtd_estoque: 0,
+    //                 descricao: 0
+    //             }).toArray()
+
+    //Exemplo de filtro de dados
     const resultados = await client.db('loja').collection('produtos')
-        .find({},
-            {   sort:{preco:-1},
+        .find({
+                preco:{$lt:5000},
+                importado:true
+            },
+            {   
+                sort:{preco:-1},
                 projection: { _id: 0,qtd_estoque: 0, descricao: 0}
             }).toArray()
-            
+
     console.table(resultados)
 
 } catch (error) {

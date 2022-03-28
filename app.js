@@ -63,14 +63,13 @@ try {
     //Exemplo de filtro de dados
     const resultados = await client.db('loja').collection('produtos')
         .find({
-                preco:{$lt:5000},
-                importado:true
+                preco:{$lt:15000},
+                importado:{$eq:true}
             },
             {   
                 sort:{preco:-1},
                 projection: { _id: 0,qtd_estoque: 0, descricao: 0}
             }).toArray()
-
     console.table(resultados)
 
 } catch (error) {

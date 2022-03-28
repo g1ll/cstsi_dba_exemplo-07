@@ -13,19 +13,8 @@ try {
         console.log("Conectado!");
     else throw Error("Erro ao conectar ao banco !!")
 
-    const produto = {
-        id_prod: 130,
-        nome: "TV LG 5G 8K",
-        descricao: "SmartTV LG 8K Model LG20228k5g",
-        importado: true,
-        preco: 14450,
-        qtd_estoque: 300
-    }
+    
 
-    const result = await client.db('loja')          //seleciona o banco
-                            .collection('produtos') //seleciona a colecao
-                            .insertOne(produto)     //insere o novo produto
-    console.log(result.acknowledged && 'Produto Inserido!!')
 } catch (error) {
     console.log(error)
 }

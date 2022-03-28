@@ -88,16 +88,37 @@ try {
 
     //OPERADORES LÓGICOS
     //AND
+    // const filtro = {
+    //         $and:[
+    //             {preco:{$gte:3000}},
+    //             {preco:{$lte:9000}}
+    //         ]
+    //     }
+
+    //NOT
+    // const filtro = {
+    //     preco:{$not:{$gte:5000}}
+    // }
+
+    //OR
+    // const filtro = {
+    //     $or: [
+    //         { qtd_estoque: { $lt: 100 } },
+    //         { qtd_estoque: { $eq: 500 } },
+    //     ]
+    // }
+    
+    //NOR
     const filtro = {
-            $and:[
-                {preco:{$gte:3000}},
-                {preco:{$lte:9000}}
-            ]
-        }
-    const opcoes ={sort:{preco:1},projection: { _id: 0, descricao: 0}}
+        $nor: [
+            { qtd_estoque: { $lt: 100 } },
+            { qtd_estoque: { $eq: 500 } },
+        ]
+    }
+    const opcoes = { sort: { qtd_estoque: -1 }, projection: { _id: 0, descricao: 0 } }
 
     const collection = client.db('loja').collection('produtos')
-    const resultados = await collection.find(filtro,opcoes).toArray()
+    const resultados = await collection.find(filtro, opcoes).toArray()
     console.table(resultados)
 
 } catch (error) {

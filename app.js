@@ -14,7 +14,7 @@ try {
     else throw Error("Erro ao conectar ao banco !!")
 
     //consulta simples
-    // const resultados = await client.db('loja').collection('produtos').find().toArray()
+    const resultados = await client.db('loja').collection('produtos').find().toArray()
 
     //consulta com projeção
     // const resultados = await client.db('loja').collection('produtos').find({},
@@ -109,16 +109,17 @@ try {
     // }
     
     //NOR
-    const filtro = {
-        $nor: [
-            { qtd_estoque: { $lt: 100 } },
-            { qtd_estoque: { $eq: 500 } },
-        ]
-    }
-    const opcoes = { sort: { qtd_estoque: -1 }, projection: { _id: 0, descricao: 0 } }
+    // const filtro = {
+    //     $nor: [
+    //         { qtd_estoque: { $lt: 100 } },
+    //         { qtd_estoque: { $eq: 500 } },
+    //     ]
+    // }
+    // const opcoes = { sort: { qtd_estoque: -1 }, projection: { _id: 0, descricao: 0 } }
 
-    const collection = client.db('loja').collection('produtos')
-    const resultados = await collection.find(filtro, opcoes).toArray()
+    // const collection = client.db('loja').collection('produtos')
+    // const resultados = await collection.find(filtro, opcoes).toArray()
+
     console.table(resultados)
 
 } catch (error) {

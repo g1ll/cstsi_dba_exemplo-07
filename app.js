@@ -14,11 +14,14 @@ try {
     else throw Error("Erro ao conectar ao banco !!")
 
     //consulta simples
+    //SELECT * FROM produtos
     const resultados = await client.db('loja').collection('produtos').find().toArray()
 
     //consulta com projeção
     // const resultados = await client.db('loja').collection('produtos').find({},
-    //     {projection: {
+    //     {
+    //         projection: {
+    //             _id:0,
     //             id_prod: 1,
     //             nome:1,
     //             importado:1,
@@ -36,7 +39,8 @@ try {
     //                 descricao: 0
     //             }
     //         }).toArray()
-
+    //resultados.map((produto,index)=>console.log(`${index} | ${produto.id_prod} | ${produto.nome} | ${produto.preco} | ${produto.importado}`))
+    
     //Usando o Projection como um método
     // const resultados = await client.db('loja').collection('produtos')
     //     .find().project({
@@ -47,9 +51,9 @@ try {
 
     //Exemplo de ordenação com a opção sort
     // const resultados = await client.db('loja').collection('produtos')
-    //     .find({},
-    //         {   sort:{preco:-1},
-    //             projection: { _id: 0,qtd_estoque: 0, descricao: 0}
+    //     .find({},{
+    //            sort:{preco:1},
+    //            projection: { _id: 0,qtd_estoque: 0, descricao: 0}
     //         }).toArray()
 
     //Usando o Sort como um método
@@ -63,12 +67,13 @@ try {
     //Exemplo de filtro de dados
     // const resultados = await client.db('loja').collection('produtos')
     //     .find({
-    //             preco:{$lt:15000},
-    //             importado:{$eq:true}
+    //             // preco:{$lt:15000},
+    //             importado:{$eq:false},
+    //             qtd_estoque:{$gte:200}
     //         },
     //         {   
-    //             sort:{preco:-1},
-    //             projection: { _id: 0,qtd_estoque: 0, descricao: 0}
+    //             sort:{qtd_estoque:1},
+    //             projection: { _id: 0, descricao: 0}
     //         }).toArray()
 
     //Exemplo de operadores de comparação
@@ -83,28 +88,28 @@ try {
 
     // //Exemplo de filtro com in ou nin
     // const filtro = {
-    //     id_prod:{$nin:[111,115,125,124]}
+    //     id_prod:{$nin:[111,115,125,124,136,114]}
     // }
 
     //OPERADORES LÓGICOS
     //AND
     // const filtro = {
-    //         $and:[
-    //             {preco:{$gte:3000}},
+    //         $and:[ // V e V -> V
+    //             {preco:{$gte:3000}}, //3k-9k
     //             {preco:{$lte:9000}}
     //         ]
     //     }
 
     //NOT
     // const filtro = {
-    //     preco:{$not:{$gte:5000}}
+    //     preco:{$not:{$gte:5000}} //$lt
     // }
 
     //OR
     // const filtro = {
     //     $or: [
     //         { qtd_estoque: { $lt: 100 } },
-    //         { qtd_estoque: { $eq: 500 } },
+    //         { qtd_estoque: { $eq: 150 } },
     //     ]
     // }
     
@@ -112,10 +117,14 @@ try {
     // const filtro = {
     //     $nor: [
     //         { qtd_estoque: { $lt: 100 } },
-    //         { qtd_estoque: { $eq: 500 } },
+    //         { qtd_estoque: { $eq: 150 } },
     //     ]
     // }
-    // const opcoes = { sort: { qtd_estoque: -1 }, projection: { _id: 0, descricao: 0 } }
+    
+    // const opcoes = { 
+    //     sort: { qtd_estoque: 1 },
+    //     projection: { _id: 0, descricao: 0 }
+    //  }
 
     // const collection = client.db('loja').collection('produtos')
     // const resultados = await collection.find(filtro, opcoes).toArray()
